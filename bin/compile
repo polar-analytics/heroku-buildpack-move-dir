@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# fail fast
+set -e
+
+# Ensure wildcards in globs match dotfiles too.
+shopt -s dotglob
+
+# debug
+# set -x
+
+# parse and derive params
+BUILD_DIR=${1:-}
+CACHE_DIR=${2:-}
+ENV_DIR=${3:-}
+
+if [ -f $ENV_DIR/BUILDPACK_MOVE_DIR_FROM ]; then
+	BUILDPACK_MOVE_DIR_FROM=`cat $ENV_DIR/BUILDPACK_MOVE_DIR_FROM`
+
+  if [ -f $ENV_DIR/BUILDPACK_MOVE_DIR_TO ]; then
+    BUILDPACK_MOVE_DIR_TO=`cat $ENV_DIR/BUILDPACK_MOVE_DIR_TO`
+
+    if [ -d $BUILD_DIR/$BUILDPACK_MOVE_DIR_FROM ]; then
+      if [ -d $BUILD_DIR/$BUILDPACK_MOVE_DIR_TO ]; then
+        echo "-----> Subdir buildpack in $PROJECT_PATH"
+        echo "       creating cache: $CACHE_DIR"
+        mv $ENV_DIR/BUILDPACK_MOVE_DIR_FROM $ENV_DIR/BUILDPACK_MOVE_DIR_TO
+        exit 0
+      fi
+    fi
+
+  fi
+
+  echo "BUILDPACK_MOVE_DIR_TO is undefined"
+  exit 1
+fi
+
+echo "BUILDPACK_MOVE_DIR_FROM is undefined"
+exit 1
