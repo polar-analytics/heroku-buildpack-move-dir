@@ -23,9 +23,8 @@ if [ -f $ENV_DIR/BUILDPACK_MOVE_DIR_FROM ]; then
 
     if [ -d $BUILD_DIR/$BUILDPACK_MOVE_DIR_FROM ]; then
       if [ -d $BUILD_DIR/$BUILDPACK_MOVE_DIR_TO ]; then
-        echo "-----> Subdir buildpack in $PROJECT_PATH"
-        echo "       creating cache: $CACHE_DIR"
-        mv $ENV_DIR/BUILDPACK_MOVE_DIR_FROM $ENV_DIR/BUILDPACK_MOVE_DIR_TO
+        echo "-----> Move directory $BUILDPACK_MOVE_DIR_FROM to $BUILDPACK_MOVE_DIR_TO"
+        mv $BUILD_DIR/$BUILDPACK_MOVE_DIR_FROM $BUILD_DIR/$BUILDPACK_MOVE_DIR_TO
         exit 0
       fi
     fi
