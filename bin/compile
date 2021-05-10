@@ -27,8 +27,13 @@ if [ -f $ENV_DIR/BUILDPACK_MOVE_DIR_FROM ]; then
         mv $BUILD_DIR/$BUILDPACK_MOVE_DIR_FROM $BUILD_DIR/$BUILDPACK_MOVE_DIR_TO
         exit 0
       fi
+
+      echo "Can't find $BUILDPACK_MOVE_DIR_TO"
+      exit 1
     fi
 
+      echo "Can't find $BUILDPACK_MOVE_DIR_FROM"
+      exit 1
   fi
 
   echo "BUILDPACK_MOVE_DIR_TO is undefined"
